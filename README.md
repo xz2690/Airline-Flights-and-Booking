@@ -13,7 +13,7 @@ A Flask web application that lets users search for flights by origin/destination
 1. **Open pgAdmin** and connect to your PostgreSQL server.
 
 2. **Create a new database and load the schema and data**:
-    using flight.sql
+    using flights.sql
 
 3. **Add foreign key constraints**:
 
