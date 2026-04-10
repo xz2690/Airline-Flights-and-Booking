@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ detail.flight_number }} · {{ detail.departure_date }}{% endblock %}
+{% block content %}
+<a href="javascript:history.back()" class="back-link">← Back to results</a>
+
+{% if detail %}
+<h1 style="display:flex; align-items:center; gap:12px;">
+  <span class="mono" style="color:var(--accent);">{{ detail.flight_number }}</span>
+  <span style="font-weight:400; color:var(--text-muted); font-size:1rem;">{{ detail.airline_name }}</span>
+</h1>
+<p class="lead">{{ detail.origin_code }} → {{ detail.dest_code }} · {{ detail.departure_date }}</p>
+
+<!-- Stats cards -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-label">Capacity</div>
+    <div class="stat-value">{{ detail.capacity }}</div>
+    <div style="margin-top:6px; font-size:0.8rem; color:var(--text-muted);">{{ detail.plane_type }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Booked</div>
+    <div class="stat-value">{{ detail.booked_seats }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Available Seats</div>
+    <div class="stat-value" style="color:
+      {% if detail.available_seats > 5 %}var(--green)
+      {% elif detail.available_seats > 0 %}var(--amber)
+      {% else %}var(--red){% endif %};">{{ detail.available_seats }}</div>
+    <div style="margin-top:6px;">
+      {% if detail.available_seats == 0 %}
+        <span class="badge badge-red">Fully Booked</span>
+      {% elif detail.available_seats <= 5 %}
+        <span class="badge badge-amber">Filling Up</span>
+      {% else %}
+        <span class="badge badge-green">Available</span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Departure</div>
+    <div class="stat-value" style="font-size:1.2rem;">{{ detail.departure_time }}</div>
+    <div style="margin-top:6px; font-size:0.8rem; color:var(--text-muted);">Duration: {{ detail.duration }}</div>
+  </div>
+</div>
+
+{% else %}
+<div class="card empty-state">
+  <p style="font-weight:600;">Flight not found.</p>
+</div>
+{% endif %}
+{% endblock %}
